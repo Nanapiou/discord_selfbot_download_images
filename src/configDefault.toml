@@ -1,6 +1,6 @@
 # |!| Be careful with the quotes (""), they are important |!|
 
-account_id = "id" # The main account id
+user_id = "id" # The main account id
 guild_id = "id" # The guild id, from where you launch commands (so you don't get spotted)
 prefix = "!" # The prefix for the commands
 

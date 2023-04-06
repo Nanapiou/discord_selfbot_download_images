@@ -79,8 +79,8 @@ export async function downloadEmbeds(embeds, path, n=10) { // Download n per n e
 }
 
 export function checkConfig(config) {
-    if (!config.account_id) {
-        throw new Error("Missing account_id in config.json");
+    if (!config.user_id) {
+        throw new Error("Missing user_id in config.json");
     }
     if (!config.guild_id) {
         throw new Error("Missing guild_id in config.json");

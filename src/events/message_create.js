@@ -1,7 +1,7 @@
 import {downloadAttachments, downloadEmbeds} from "../util/functions.js";
 
 export default async function (client, message) {
-    if (message.author.id === client.config.account_id || message.guild_id === client.config.guild_id) {
+    if (message.author.id === client.config.user_id || message.guild_id === client.config.guild_id) {
         const {prefix} = client.config;
 
         if (message.content.startsWith(prefix)) {
