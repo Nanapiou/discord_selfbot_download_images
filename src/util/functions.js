@@ -38,10 +38,30 @@ export function getAttachments(messages) {
     return attachments;
 }
 
+export function getEmbeds(messages) {
+    const embeds = [];
+    for (const message of messages) {
+        for (const embed of message.embeds) {
+            if (embed.type === "image" || embed.type === "gifv" || embed.type === "video") {
+                embeds.push(embed);
+            }
+        }
+    }
+    return embeds;
+}
+
 export async function downloadAttachments(attachments, path) {
     for (const attachment of attachments) {
         console.log(`Fetching ${attachment.url}`);
         const res = await fetch(attachment.url);
         await writeFile(`${path}/${attachment.id}_${attachment.filename}`, Buffer.from(await res.arrayBuffer()));
+    }
+}
+
+export async function downloadEmbeds(embeds, path) {
+    for (const embed of embeds) {
+        console.log(`Fetching ${embed.url}`);
+        const res = await fetch(embed.url);
+        await writeFile(`${path}/${embed.url.replace(/[#%&{}\\<>*?/$!'":@+`|=]/g, '')}`, Buffer.from(await res.arrayBuffer()));
     }
 }

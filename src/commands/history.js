@@ -1,4 +1,4 @@
-import {fetchAllMessages, getAttachments, downloadAttachments} from "../util/functions.js";
+import {fetchAllMessages, getAttachments, getEmbeds, downloadAttachments, downloadEmbeds} from "../util/functions.js";
 
 export default {
     name: "history",
@@ -26,12 +26,14 @@ export default {
         });
         const messages = await fetchAllMessages(client, channelId);
         const attachments = getAttachments(messages);
+        const embeds = getEmbeds(messages);
         client.rest.post(`/channels/${message.channel_id}/messages`, {
-            content: `Found ${attachments.length} attachments, downloading...`,
+            content: `Found ${attachments.length} attachments and ${embeds.length} embeds, downloading...`,
         });
         await downloadAttachments(attachments, path);
+        await downloadEmbeds(embeds, path);
         return client.rest.post(`/channels/${message.channel_id}/messages`, {
-            content: `Scanned and downloaded ${attachments.length} attachments from <#${channelId}>`,
+            content: `Scanned and downloaded ${attachments.length + embeds.length} attachments/embeds from <#${channelId}>`,
             message_reference: {
                 message_id: message.id
             }
