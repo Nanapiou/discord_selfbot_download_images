@@ -50,13 +50,18 @@ export function getEmbeds(messages) {
     return embeds;
 }
 
+function cleanName(name, max=256) {
+    const cleaned = name.replace(/[#%&{}\\<>*?/$!'":@+`|=]/g, '').replaceAll('..', '.');
+    return cleaned.length > max ? cleaned.slice(cleaned.length - max) : cleaned;
+}
+
 export async function downloadAttachments(attachments, path, n=10) { // Download n per n attachments
     const promises = [];
     for (let i = 0; i < attachments.length; i += n) {
         const attachmentsToDownload = attachments.slice(i, i + n);
         for (const attachment of attachmentsToDownload) {
             console.log(`Fetching ${attachment.url}`);
-            const promise = fetch(attachment.url).then(res => res.arrayBuffer()).then(buffer => writeFile(`${path}/${attachment.id}_${attachment.filename}`, Buffer.from(buffer)));
+            const promise = fetch(attachment.url).then(res => res.arrayBuffer()).then(buffer => writeFile(`${path}/${attachment.id}_${cleanName(attachment.filename, 235)}`, Buffer.from(buffer)));
             promises.push(promise);
         }
         console.log(`Waiting for ${attachmentsToDownload.length} attachments to be downloaded`);
@@ -70,7 +75,7 @@ export async function downloadEmbeds(embeds, path, n=10) { // Download n per n e
         const embedsToDownload = embeds.slice(i, i + n);
         for (const embed of embedsToDownload) {
             console.log(`Fetching ${embed.url}`);
-            const promise = fetch(embed.url).then(res => res.arrayBuffer()).then(buffer => writeFile(`${path}/${embed.url.replace(/[#%&{}\\<>*?/$!'":@+`|=]/g, '')}`, Buffer.from(buffer)));
+            const promise = fetch(embed.url).then(res => res.arrayBuffer()).then(buffer => writeFile(`${path}/${cleanName(embed.url)}`, Buffer.from(buffer)));
             promises.push(promise);
         }
         console.log(`Waiting for ${embedsToDownload.length} embeds to be downloaded`);
