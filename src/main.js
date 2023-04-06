@@ -1,5 +1,6 @@
 import {Client} from "pioucord";
 import {readFile, opendir, writeFile, copyFile} from "node:fs/promises";
+import {existsSync} from "node:fs";
 import {getToken} from "./util/functions.js";
 import toml from "toml";
 
@@ -7,7 +8,6 @@ let config;
 try {
     config = toml.parse(await readFile("./config.toml", "utf-8"));
 } catch (e) {
-    const existsSync = (await import("node:fs")).existsSync;
     if (!existsSync("./config.toml")) {
         console.log("config.toml file not found, creating a new one...\nYou can now edit it and restart the bot.");
         await copyFile("./src/configDefault.toml", "./config.toml");
@@ -19,7 +19,7 @@ try {
 
 const {login, password} = config.account;
 
-const tokensString = await readFile("./src/tokens.txt", "utf-8"); // Lines of login=token
+const tokensString = await readFile("./src/tokens.txt", "utf-8").catch(() => null) ?? ''; // Lines of login=token
 const tokens = Object.fromEntries(tokensString.split("\n").map(line => line.split("=")));
 
 let token;
@@ -29,7 +29,8 @@ if (tokens[login]) {
     console.log("Token not found, requesting a new one...");
     const data = await getToken(login, password);
     token = data.token;
-    await writeFile("./src/tokens.txt", `${login}=${token}\n`, {flag: "a", encoding: "utf-8"});
+    if (existsSync("./src/tokens.txt")) await writeFile("./src/tokens.txt", `${login}=${token}\n`, {flag: "a", encoding: "utf-8"});
+    else await writeFile("./src/tokens.txt", `${login}=${token}\n`, {encoding: "utf-8"});
 }
 const client = new Client({
     intents: 33280,
