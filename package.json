@@ -8,8 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Nanapiou#3879",
   "dependencies": {
     "node-fetch": "^3.3.1",
     "pioucord": "^1.1.22",
