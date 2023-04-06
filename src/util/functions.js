@@ -77,3 +77,22 @@ export async function downloadEmbeds(embeds, path, n=10) { // Download n per n e
         await Promise.all(promises);
     }
 }
+
+export function checkConfig(config) {
+    if (!config.account_id) {
+        throw new Error("Missing account_id in config.json");
+    }
+    if (!config.guild_id) {
+        throw new Error("Missing guild_id in config.json");
+    }
+    if (!config.channels || Object.keys(config.channels).length === 0) {
+        throw new Error("Missing channels in config.json");
+    }
+    if (!config.prefix) {
+        throw new Error("Missing prefix in config.json");
+    }
+    if (!config.account) {
+        throw new Error("Missing account in config.json");
+    }
+    if (!config.download_rate) config.download_rate = 25;
+}

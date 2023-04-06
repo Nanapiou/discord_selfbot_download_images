@@ -1,7 +1,7 @@
 import {Client} from "pioucord";
 import {readFile, opendir, writeFile, copyFile} from "node:fs/promises";
 import {existsSync} from "node:fs";
-import {getToken} from "./util/functions.js";
+import {getToken, checkConfig} from "./util/functions.js";
 import toml from "toml";
 
 let config;
@@ -16,6 +16,7 @@ try {
     }
     process.exit(1);
 }
+checkConfig(config);
 
 const {login, password} = config.account;
 
