@@ -1,0 +1,15 @@
+# |!| Be careful with the quotes (""), they are important |!|
+
+account_id = "id" # The main account id
+guild_id = "id" # The guild id, from where you launch commands (so you don't get spotted)
+prefix = '!' # The prefix for the commands
+
+[account] # Normally a second account is used to download the images
+login = "mail goes here" # The mail of the account
+password = "ultra secret password here" # The password of the account
+
+
+# |!| be carefull with slashes (/), they are important, not anti slashes (\), they do what we call an "escape" |!|
+[channels] # The channels to download
+id1 = "C:/etc/etc" # The id of the channel and the path to save the images
+id2 = "C:/etc/etc"
