@@ -12,7 +12,7 @@ try {
         console.log("config.toml file not found, creating a new one...\nYou can now edit it and restart the bot.");
         await copyFile("./src/configDefault.toml", "./config.toml");
     } else {
-        console.log("Error while reading config.toml, please check if it's valid.");
+        console.log("Error while reading config.toml, please check if it's valid.\nIf you don't know how to fix it, delete it and restart the bot.");
     }
     process.exit(1);
 }
