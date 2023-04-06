@@ -1,7 +1,7 @@
 import {existsSync} from 'node:fs';
 
 export default async function (client) {
-    console.log(`Logged in as ${client.user.username}`);
+    console.log(`Logged in as ${client.user.username}. Press CTRL+C to exit`);
 
     client.imageChannel = new Map();
     for (const channelId of Object.keys(client.config.channels)) {

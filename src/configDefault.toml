@@ -4,6 +4,8 @@ account_id = "id" # The main account id
 guild_id = "id" # The guild id, from where you launch commands (so you don't get spotted)
 prefix = '!' # The prefix for the commands
 
+download_rate = 25 # The number of images to download at the same time (reduce if you have a connection overload, increase if you are confident enough)
+
 [account] # Normally a second account is used to download the images
 login = "mail goes here" # The mail of the account
 password = "ultra secret password here" # The password of the account

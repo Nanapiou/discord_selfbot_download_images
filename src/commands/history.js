@@ -18,7 +18,7 @@ export default {
             }
         });
         const path = client.config.channels[channelId];
-        client.rest.post(`/channels/${message.channel_id}/messages`, {
+        await client.rest.post(`/channels/${message.channel_id}/messages`, {
             content: `Scanning channel <#${channelId}>...`,
             message_reference: {
                 message_id: message.id,
@@ -27,10 +27,10 @@ export default {
         const messages = await fetchAllMessages(client, channelId);
         const attachments = getAttachments(messages);
         const embeds = getEmbeds(messages);
-        client.rest.post(`/channels/${message.channel_id}/messages`, {
+        await client.rest.post(`/channels/${message.channel_id}/messages`, {
             content: `Found ${attachments.length} attachments and ${embeds.length} embeds, downloading...`,
         });
-        await downloadAttachments(attachments, path);
+        await downloadAttachments(attachments, path, 25);
         await downloadEmbeds(embeds, path);
         return client.rest.post(`/channels/${message.channel_id}/messages`, {
             content: `Scanned and downloaded ${attachments.length + embeds.length} attachments/embeds from <#${channelId}>`,
