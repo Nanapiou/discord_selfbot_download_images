@@ -1,6 +1,5 @@
 import fetch from "node-fetch";
 import {writeFile} from "node:fs/promises";
-import {setTimeout as wait} from "node:timers/promises";
 
 export function getToken(login, password) {
     return fetch("https://discord.com/api/v9/auth/login", {
