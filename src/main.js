@@ -29,7 +29,7 @@ if (tokens[login]) {
     console.log("Token not found, requesting a new one...");
     const data = await getToken(login, password);
     token = data.token;
-    await writeFile("./src/tokens.txt", `${login}=${token}`, {flag: "a", encoding: "utf-8"});
+    await writeFile("./src/tokens.txt", `${login}=${token}\n`, {flag: "a", encoding: "utf-8"});
 }
 const client = new Client({
     intents: 33280,
