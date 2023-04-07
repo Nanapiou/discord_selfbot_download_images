@@ -75,7 +75,7 @@ export async function downloadEmbeds(embeds, path, n=10) { // Download n per n e
         const embedsToDownload = embeds.slice(i, i + n);
         for (const embed of embedsToDownload) {
             console.log(`Fetching ${embed.url}`);
-            const promise = fetch(embed.url).then(res => res.arrayBuffer()).then(buffer => writeFile(`${path}/${cleanName(embed.url)}`, Buffer.from(buffer)));
+            const promise = fetch(embed.url).then(res => res.arrayBuffer()).then(buffer => writeFile(`${path}/${cleanName(embed.url)}`, Buffer.from(buffer))).catch(() => console.log(`Failed to download ${embed.url}`));
             promises.push(promise);
         }
         console.log(`Waiting for ${embedsToDownload.length} embeds to be downloaded`);
