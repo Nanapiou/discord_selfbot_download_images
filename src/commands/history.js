@@ -31,7 +31,7 @@ export default {
             content: `Found ${attachments.length} attachments and ${embeds.length} embeds, downloading...`,
         });
         await downloadAttachments(attachments, path, client.config.download_rate);
-        await downloadEmbeds(embeds, client.config.download_rate);
+        await downloadEmbeds(embeds, path, client.config.download_rate);
         return client.rest.post(`/channels/${message.channel_id}/messages`, {
             content: `Scanned and downloaded ${attachments.length + embeds.length} attachments/embeds from <#${channelId}>`,
             message_reference: {
