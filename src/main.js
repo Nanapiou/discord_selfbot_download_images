@@ -1,7 +1,8 @@
+
 import {Client} from "pioucord";
 import {readFile, opendir, writeFile, copyFile} from "node:fs/promises";
 import {existsSync} from "node:fs";
-import {getToken, checkConfig} from "./util/functions.js";
+import {getToken, checkConfig, expandHomePath} from "./util/functions.js";
 import toml from "toml";
 
 let config;
@@ -17,6 +18,11 @@ try {
     process.exit(1);
 }
 checkConfig(config);
+const channels = {};
+for (const channelId of Object.keys(config.channels)) {
+    channels[channelId] = expandHomePath(config.channels[channelId]);
+}
+config.channels = channels;
 
 const {login, password} = config.account;
 

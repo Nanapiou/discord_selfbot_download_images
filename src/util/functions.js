@@ -1,5 +1,7 @@
 import fetch from "node-fetch";
 import {writeFile} from "node:fs/promises";
+import {homedir} from "os";
+import {join as pathJoin} from "path";
 
 export function getToken(login, password) {
     return fetch("https://discord.com/api/v9/auth/login", {
@@ -81,6 +83,19 @@ export async function downloadEmbeds(embeds, path, n=10) { // Download n per n e
         console.log(`Waiting for ${embedsToDownload.length} embeds to be downloaded`);
         await Promise.all(promises);
     }
+}
+
+/**
+ * Expands a path that may begin with ~ to the full home directory path.
+ * @param {string} inputPath
+ * @returns {string} Absolute path with ~ expanded.
+ */
+export function expandHomePath(inputPath) {
+  if (!inputPath) return inputPath;
+  if (inputPath.startsWith('~')) {
+    return pathJoin(homedir(), inputPath.slice(1));
+  }
+  return inputPath;
 }
 
 export function checkConfig(config) {
